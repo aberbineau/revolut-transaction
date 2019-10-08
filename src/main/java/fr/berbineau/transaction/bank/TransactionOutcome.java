@@ -1,0 +1,8 @@
+package fr.berbineau.transaction.bank;
+
+public enum TransactionOutcome {
+    TRANSACTION_OK,
+    ERROR_SOURCE_ACCOUNT_BALANCE_INSUFFICIENT,
+    ERROR_SOURCE_ACCOUNT_DOES_NOT_EXIST,
+    ERROR_DESTINATION_ACCOUNT_DOES_NOT_EXIST;
+}
