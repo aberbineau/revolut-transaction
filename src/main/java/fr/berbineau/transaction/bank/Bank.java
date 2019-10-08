@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import fr.berbineau.transaction.data.Account;
 import fr.berbineau.transaction.data.Transaction;
@@ -41,7 +42,7 @@ public class Bank {
     }
 
     /**
-     * @return a shallow copy of the transactions history
+     * @return a shallow copy of the bank's transactions history
      */
     public List<Transaction> getTransactionsHistory() {
         return new ArrayList<>(transactionsHistory);
@@ -111,6 +112,20 @@ public class Bank {
         }
 
         return TransactionOutcome.TRANSACTION_OK;
+    }
+
+    /**
+     * Returns a list of an account's transactions history
+     * 
+     * @param account
+     *            the account for which the history is wanted
+     * @return the transaction history of this account
+     */
+    public List<Transaction> getTransactionsHistory(Account account) {
+        return transactionsHistory.stream()
+                .filter(t -> t.getSourceAccountNumber().equals(account.getAccountNumber())
+                        || t.getDestinationAccountNumber().equals(account.getAccountNumber()))
+                .collect(Collectors.toList());
     }
 
     private void initialize() {
