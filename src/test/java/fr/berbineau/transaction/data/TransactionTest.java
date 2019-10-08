@@ -14,4 +14,8 @@ public class TransactionTest {
         assertThrows(IllegalArgumentException.class, () -> new Transaction(negativeAmount, 1L, 2L));
     }
 
+    @Test
+    public void constructorShouldThrowIllegalArgumentExceptionWhenAmountIsZero() {
+        assertThrows(IllegalArgumentException.class, () -> new Transaction(BigDecimal.ZERO, 1L, 2L));
+    }
 }
