@@ -34,7 +34,7 @@ public class Transaction implements Serializable {
     public Transaction(BigDecimal amount, Long sourceAccountNumber, Long destinationAccountNumber)
             throws IllegalArgumentException {
         super();
-        if (BigDecimal.ZERO.compareTo(amount) > 0) {
+        if (BigDecimal.ZERO.compareTo(amount) >= 0) {
             throw new IllegalArgumentException("The amount of a transaction cannot be negative or zero");
         }
         this.amount = amount;
