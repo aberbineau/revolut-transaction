@@ -1,0 +1,17 @@
+#Eclipse
+.classpath
+.project
+.settings
+
+#Maven
+target
+
+#Approximately Binaries
+*.jar
+*.war
+*.class
+
+#Misc
+*.log
+*.gz
+*.tar
