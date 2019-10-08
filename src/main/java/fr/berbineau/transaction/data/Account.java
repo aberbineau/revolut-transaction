@@ -38,7 +38,19 @@ public class Account implements Serializable {
         this.balance = balance;
     }
 
-    public void sendTransaction(Transaction transaction) throws BalanceException {
+    /**
+     * Applies an outgoing transaction from this account by removing the amount
+     * from the account balance
+     * 
+     * @param transaction
+     *            the transaction to be applied
+     * @throws BalanceException
+     *             if the account balance is less than the transaction amount
+     * @throws IllegalArgumentException
+     *             if the transaction source account number does not match this
+     *             account number
+     */
+    public void sendTransaction(Transaction transaction) throws BalanceException, IllegalArgumentException {
         if (!accountNumber.equals(transaction.getSourceAccountNumber())) {
             throw new IllegalArgumentException("The transaction is not from this account " + accountNumber.toString());
         }
@@ -51,7 +63,17 @@ public class Account implements Serializable {
         balance = newBalance;
     }
 
-    public void receiveTransaction(Transaction transaction) {
+    /**
+     * Applies an incoming transaction to this account by adding the amount to
+     * the account balance
+     * 
+     * @param transaction
+     *            the transaction to be applied
+     * @throws IllegalArgumentException
+     *             if the transaction destination account number does not match
+     *             this account number
+     */
+    public void receiveTransaction(Transaction transaction) throws IllegalArgumentException {
         if (!accountNumber.equals(transaction.getDestinationAccountNumber())) {
             throw new IllegalArgumentException("The transaction is not to this account: " + accountNumber.toString());
         }

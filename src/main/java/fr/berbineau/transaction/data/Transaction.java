@@ -19,6 +19,18 @@ public class Transaction implements Serializable {
         return amount;
     }
 
+    /**
+     * Instantiate a transaction
+     * 
+     * @param amount
+     *            the amount of the transaction
+     * @param sourceAccountNumber
+     *            the account number from which the money is to be drafted
+     * @param destinationAccountNumber
+     *            the account number to which the money is to be added
+     * @throws IllegalArgumentException
+     *             if the transaction amount is zero or less
+     */
     public Transaction(BigDecimal amount, Long sourceAccountNumber, Long destinationAccountNumber)
             throws IllegalArgumentException {
         super();
