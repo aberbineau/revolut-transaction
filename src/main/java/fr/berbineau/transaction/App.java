@@ -1,13 +1,13 @@
 package fr.berbineau.transaction;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import static spark.Spark.get;
+
+public class App {
+    public static void main(String[] args) {
+        get("/hello", (req, res) -> "Hello, world");
+
+        get("/hello/:name", (req, res) -> {
+            return "Hello, " + req.params(":name");
+        });
     }
 }
