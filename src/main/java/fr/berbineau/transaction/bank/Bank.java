@@ -41,6 +41,10 @@ public class Bank {
         accounts.put(account.getAccountNumber(), account);
     }
 
+    public Map<Long, Account> getAccounts() {
+        return accounts;
+    }
+
     /**
      * @return a shallow copy of the bank's transactions history
      */
@@ -53,7 +57,7 @@ public class Bank {
      * 
      * @param transaction
      */
-    public void addTransaction(Transaction transaction) {
+    private void addTransactionToHistory(Transaction transaction) {
         transactionsHistory.add(transaction);
     }
 
@@ -106,7 +110,7 @@ public class Bank {
         try {
             source.sendTransaction(transaction);
             destination.receiveTransaction(transaction);
-            transactionsHistory.add(transaction);
+            addTransactionToHistory(transaction);
         } catch (BalanceException be) {
             return TransactionOutcome.ERROR_SOURCE_ACCOUNT_BALANCE_INSUFFICIENT;
         }
