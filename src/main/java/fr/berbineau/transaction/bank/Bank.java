@@ -126,10 +126,20 @@ public class Bank {
      * @return the transaction history of this account
      */
     public List<Transaction> getTransactionsHistory(Account account) {
-        return transactionsHistory.stream()
-                .filter(t -> t.getSourceAccountNumber().equals(account.getAccountNumber())
-                        || t.getDestinationAccountNumber().equals(account.getAccountNumber()))
-                .collect(Collectors.toList());
+        return getTransactionsHistory(account.getAccountNumber());
+    }
+
+    /**
+     * Returns a list of an account's transactions history from the account's
+     * number
+     * 
+     * @param accountNumber
+     *            the number of the account for which the history is wanted
+     * @return the transaction history of this account
+     */
+    public List<Transaction> getTransactionsHistory(Long accountNumber) {
+        return transactionsHistory.stream().filter(t -> t.getSourceAccountNumber().equals(accountNumber)
+                || t.getDestinationAccountNumber().equals(accountNumber)).collect(Collectors.toList());
     }
 
     /**
