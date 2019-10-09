@@ -132,7 +132,10 @@ public class Bank {
                 .collect(Collectors.toList());
     }
 
-    private void initialize() {
+    /**
+     * Reset the state of the Bank
+     */
+    protected void initialize() {
         accounts = new HashMap<>();
         transactionsHistory = new ArrayList<>();
     }
