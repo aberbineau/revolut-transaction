@@ -14,6 +14,7 @@ import fr.berbineau.transaction.bank.TransactionOutcome;
 import fr.berbineau.transaction.data.Account;
 import fr.berbineau.transaction.data.Transaction;
 import fr.berbineau.transaction.dto.PostTransactionResponse;
+import fr.berbineau.transaction.exceptions.AccountException;
 
 /**
  * The basic app class
@@ -35,8 +36,10 @@ public class App {
                 return json;
             } catch (NumberFormatException nfe) {
                 response.status(400);
-                return ("Invalid ID");
+            } catch (AccountException ae) {
+                response.status(404);
             }
+            return ("Invalid ID");
         });
 
         get("/account/:id/history", (request, response) -> {
@@ -46,8 +49,8 @@ public class App {
                 return json;
             } catch (NumberFormatException nfe) {
                 response.status(400);
-                return ("Invalid ID");
             }
+            return ("Invalid ID");
         });
 
         get("/account", (request, response) -> {
@@ -62,9 +65,12 @@ public class App {
         });
     }
 
-    private static String getAccountById(String strId) throws NumberFormatException {
+    private static String getAccountById(String strId) throws AccountException, NumberFormatException {
         Long longId = Long.parseLong(strId);
         Account account = bank.getAccountById(longId);
+        if (null == account) {
+            throw new AccountException();
+        }
         return gson.toJson(account);
     }
 
@@ -72,7 +78,6 @@ public class App {
         Long longId = Long.parseLong(strId);
         List<Transaction> history = bank.getTransactionsHistory(longId);
         if (history.isEmpty()) {
-            history.add(null);
         }
         return gson.toJson(history);
     }
@@ -89,6 +94,14 @@ public class App {
         return gson.toJson(json);
     }
 
+    /**
+     * This static initializer initializes ten accounts in the bank
+     * 
+     * Outside of a POC setting the account holding should be done via a data
+     * base (on disk for persistance or in-memory for a more advanced POC)
+     * 
+     * @return
+     */
     public static Bank staticInitializer() {
         Bank bank = Bank.getInstance();
         for (long l = 1; l < 11; l++) {
